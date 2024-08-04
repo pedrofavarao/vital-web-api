@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 @Entity
@@ -31,6 +32,11 @@ public class Donator {
     @NotNull
     private int age;
 
+    @Column(name = "gender")
+    @NotBlank
+    @Size(max = 1)
+    private String gender;
+
     @Column(name = "height")
     @NotNull
     private int height;
@@ -42,6 +48,7 @@ public class Donator {
     @Column(name = "blood_type")
     @NotBlank
     @NotNull
+    @Size(max = 4)
     private String bloodType;
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
