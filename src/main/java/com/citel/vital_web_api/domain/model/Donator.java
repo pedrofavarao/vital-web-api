@@ -4,7 +4,12 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.*;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.List;
 
 @Entity
 @Table(name = "donators")
@@ -31,6 +36,11 @@ public class Donator {
     @NotNull
     private int age;
 
+    @Column(name = "gender")
+    @NotBlank
+    @Size(max = 1)
+    private String gender;
+
     @Column(name = "height")
     @NotNull
     private int height;
@@ -42,10 +52,27 @@ public class Donator {
     @Column(name = "blood_type")
     @NotBlank
     @NotNull
+    @Size(max = 4)
     private String bloodType;
+
+    private List<String> bloodDonation;
+
+    private List<String> bloodReceive;
+
+    @Column(name = "imc")
+    @NotNull
+    private double imc;
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "id")
     @JsonManagedReference
     private Address address;
+
+    public void setImc(){
+        double heightInMeters = this.height / 100.0; // Converte altura para metros
+        double calculatedImc = this.weight / (heightInMeters * heightInMeters);
+        BigDecimal bigDecimalImc = new BigDecimal(calculatedImc);
+        bigDecimalImc = bigDecimalImc.setScale(2, RoundingMode.HALF_UP);
+        this.imc = bigDecimalImc.doubleValue();
+    }
 }
