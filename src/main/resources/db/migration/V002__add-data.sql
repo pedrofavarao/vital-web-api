@@ -1,28 +1,17 @@
-INSERT INTO donators (id, first_name, last_name, age, gender, height, weight, blood_type) VALUES
-(1, 'João', 'Silva', 28, 'M', 175, 70, 'O+'),
-(2, 'Maria', 'Souza', 35, 'F', 165, 60, 'A+'),
-(3, 'Pedro', 'Oliveira', 32, 'M', 180, 80, 'B+'),
-(4, 'Ana', 'Costa', 29, 'F', 170, 65, 'AB+'),
-(5, 'Lucas', 'Pereira', 27, 'M', 175, 75, 'O-'),
-(6, 'Carla', 'Ferreira', 33, 'F', 160, 55, 'A-'),
-(7, 'Rafael', 'Santos', 31, 'M', 178, 78, 'B-'),
-(8, 'Fernanda', 'Lima', 26, 'F', 168, 58, 'AB-'),
-(9, 'Marcelo', 'Rodrigues', 34, 'M', 185, 85, 'O+'),
-(10, 'Patrícia', 'Almeida', 30, 'F', 172, 62, 'A+'),
-(11, 'Bruno', 'Martins', 25, 'M', 180, 75, 'B+'),
-(12, 'Camila', 'Barbosa', 28, 'F', 160, 54, 'AB+'),
-(13, 'Diego', 'Ramos', 36, 'M', 175, 70, 'O-'),
-(14, 'Juliana', 'Melo', 32, 'F', 168, 60, 'A-'),
-(15, 'Gustavo', 'Azevedo', 29, 'M', 180, 80, 'B-'),
-(16, 'Sofia', 'Cavalcante', 27, 'F', 165, 55, 'AB-'),
-(17, 'Rodrigo', 'Teixeira', 35, 'M', 183, 82, 'O+'),
-(18, 'Luana', 'Sousa', 33, 'F', 170, 65, 'A+'),
-(19, 'Felipe', 'Freitas', 30, 'M', 178, 75, 'B+'),
-(20, 'Renata', 'Gomes', 31, 'F', 162, 58, 'AB+'),
-(21, 'André', 'Nogueira', 34, 'M', 185, 85, 'O-'),
-(22, 'Larissa', 'Carvalho', 28, 'F', 170, 60, 'A-'),
-(23, 'Eduardo', 'Monteiro', 26, 'M', 175, 70, 'B-');
+-- Inserir dados na tabela donators
+INSERT INTO donators (id, first_name, last_name, age, gender, height, weight, blood_type, imc) VALUES
+(1, 'João', 'Silva', 28, 'M', 175, 70, 'A+', 22.86),
+(2, 'Maria', 'Souza', 35, 'F', 165, 60, 'A-', 22.04),
+(3, 'Pedro', 'Oliveira', 42, 'M', 180, 80, 'B+', 24.69),
+(4, 'Ana', 'Costa', 29, 'F', 170, 65, 'B-', 22.49),
+(5, 'Lucas', 'Pereira', 50, 'M', 175, 75, 'AB+', 24.49),
+(6, 'Carla', 'Ferreira', 33, 'F', 160, 55, 'AB-', 21.48),
+(7, 'Rafael', 'Santos', 45, 'M', 178, 78, 'O-', 24.58),
+(8, 'Fernanda', 'Lima', 70, 'F', 168, 58, 'O+', 20.54);
 
+
+
+-- Inserir dados na tabela address
 INSERT INTO address (id, city, state) VALUES
 (1, 'São Paulo', 'SP'),
 (2, 'Rio de Janeiro', 'RJ'),
@@ -30,20 +19,5 @@ INSERT INTO address (id, city, state) VALUES
 (4, 'Porto Alegre', 'RS'),
 (5, 'Curitiba', 'PR'),
 (6, 'Florianópolis', 'SC'),
-(7, 'Fortaleza', 'CE'),
-(8, 'Salvador', 'BA'),
-(9, 'Recife', 'PE'),
-(10, 'Brasília', 'DF'),
-(11, 'Manaus', 'AM'),
-(12, 'Belém', 'PA'),
-(13, 'Goiânia', 'GO'),
-(14, 'Vitória', 'ES'),
-(15, 'Natal', 'RN'),
-(16, 'Maceió', 'AL'),
-(17, 'João Pessoa', 'PB'),
-(18, 'São Luís', 'MA'),
-(19, 'Teresina', 'PI'),
-(20, 'Aracaju', 'SE'),
-(21, 'Cuiabá', 'MT'),
-(22, 'Campo Grande', 'MS'),
-(23, 'Palmas', 'TO');
+(7, 'Salvador', 'BA'),
+(8, 'Recife', 'PE');

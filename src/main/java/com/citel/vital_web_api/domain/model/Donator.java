@@ -7,6 +7,10 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.List;
+
 @Entity
 @Table(name = "donators")
 @Getter
@@ -51,8 +55,24 @@ public class Donator {
     @Size(max = 4)
     private String bloodType;
 
+    private List<String> bloodDonation;
+
+    private List<String> bloodReceive;
+
+    @Column(name = "imc")
+    @NotNull
+    private double imc;
+
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "id")
     @JsonManagedReference
     private Address address;
+
+    public void setImc(){
+        double heightInMeters = this.height / 100.0; // Converte altura para metros
+        double calculatedImc = this.weight / (heightInMeters * heightInMeters);
+        BigDecimal bigDecimalImc = new BigDecimal(calculatedImc);
+        bigDecimalImc = bigDecimalImc.setScale(2, RoundingMode.HALF_UP);
+        this.imc = bigDecimalImc.doubleValue();
+    }
 }

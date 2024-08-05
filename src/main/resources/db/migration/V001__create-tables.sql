@@ -7,6 +7,7 @@ CREATE TABLE donators (
     height INTEGER NOT NULL,
     weight INTEGER NOT NULL,
     blood_type VARCHAR(4) NOT NULL,
+    imc DOUBLE NOT NULL,
     PRIMARY KEY (id)
 );
 
