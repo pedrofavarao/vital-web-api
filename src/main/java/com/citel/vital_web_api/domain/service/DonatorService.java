@@ -52,15 +52,13 @@ public class DonatorService {
         }
     }
 
-    // Função para calcular o IMC médio por faixa etária
+    // Calcula o IMC médio por faixa etária
     public Map<String, Double> calculateAverageIMCByAgeRange() {
         List<Donator> donators = donatorRepository.findAll(); // Obtém todos os doadores
 
-        // Agrupa os doadores por faixa etária
         Map<String, List<Donator>> groupedByAgeRange = donators.stream()
                 .collect(Collectors.groupingBy(this::getAgeRange));
 
-        // Calcula o IMC médio para cada faixa etária
         return groupedByAgeRange.entrySet().stream()
                 .collect(Collectors.toMap(
                         Map.Entry::getKey,
@@ -70,14 +68,13 @@ public class DonatorService {
 
     // Calcula o IMC médio para uma lista de doadores
     private double calculateAverageIMC(List<Donator> donators) {
-        double averageAge = donators.stream()
-                .mapToInt(Donator::getAge) // Mapeia idades para int
+        double averageIMC = donators.stream()
+                .mapToDouble(Donator::getImc) // Mapeia IMCs para double
                 .average() // Calcula a média
                 .orElse(0.0); // Retorna 0.0 se não houver doadores
 
-        // Arredonda para duas casas decimais
-        BigDecimal roundedAverageAge = new BigDecimal(averageAge).setScale(2, RoundingMode.HALF_UP);
-        return roundedAverageAge.doubleValue();
+        BigDecimal roundedAverageIMC = new BigDecimal(averageIMC).setScale(2, RoundingMode.HALF_UP);
+        return roundedAverageIMC.doubleValue();
     }
 
     // Determina a faixa etária de um doador
@@ -88,7 +85,7 @@ public class DonatorService {
         return String.format("%d - %d", lowerBound, upperBound);
     }
 
-    // Função para calcular a média de idade por tipo sanguíneo
+    // Calcula a média de idade por tipo sanguíneo
     public List<AverageAgeByBloodTypeDto> calculateAverageAgeByBloodType() {
         List<Donator> donators = donatorRepository.findAll();
 
@@ -110,25 +107,24 @@ public class DonatorService {
                 .average() // Calcula a média
                 .orElse(0.0); // Retorna 0.0 se não houver doadores
 
-        // Arredonda para duas casas decimais
         BigDecimal roundedAverageAge = new BigDecimal(averageAge).setScale(2, RoundingMode.HALF_UP);
         return roundedAverageAge.doubleValue();
     }
 
-    // Função para calcular o percentual de obesos por gênero
+    // Calcula o percentual de obesos por gênero
     public List<ObesityPercentageDto> calculateObesityPercentageByGender() {
         List<Donator> donators = donatorRepository.findAll(); // Obtém todos os doadores
 
-        // Conta o total de doadores por gênero
+        // Doadores por gênero
         Map<String, Long> totalByGender = donators.stream()
                 .collect(Collectors.groupingBy(Donator::getGender, Collectors.counting()));
 
-        // Conta o total de obesos por gênero
+        // Obesos por gênero
         Map<String, Long> obeseByGender = donators.stream()
                 .filter(donator -> donator.getImc() > 30)
                 .collect(Collectors.groupingBy(Donator::getGender, Collectors.counting()));
 
-        // Calcula o percentual de obesos por gênero e converte para DTO
+        // Calcula o percentual de obesos por gênero
         return totalByGender.entrySet().stream()
                 .map(entry -> {
                     String gender = entry.getKey();
@@ -171,18 +167,15 @@ public class DonatorService {
     public List<BloodTypeDonorCountDTO> calculatePossibleDonors() {
         List<Donator> donators = getAllDonators();
 
-        // Map para contar doadores para cada tipo sanguíneo
         Map<String, Integer> donorCount = new HashMap<>();
 
-        // Percorre todos os doadores
         for (Donator donator : donators) {
             List<String> canDonateToList = getCanDonateTo(donator.getBloodType());
             for (String bloodType : canDonateToList) {
                 donorCount.put(bloodType, donorCount.getOrDefault(bloodType, 0) + 1);
             }
         }
-
-        // Converte o Map para uma lista de DTOs
+        
         return donorCount.entrySet().stream()
                 .map(entry -> new BloodTypeDonorCountDTO(entry.getKey(), entry.getValue()))
                 .collect(Collectors.toList());

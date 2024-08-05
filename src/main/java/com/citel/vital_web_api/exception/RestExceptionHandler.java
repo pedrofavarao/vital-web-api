@@ -1,5 +1,6 @@
 package com.citel.vital_web_api.exception;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -31,4 +32,10 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
     }
 
+    @ExceptionHandler(EntityNotFoundException.class)
+    private ResponseEntity<RestErrorMessage> notFound(EntityNotFoundException exception){
+        RestErrorMessage errorMessage = new RestErrorMessage(HttpStatus.NOT_FOUND,
+                "Entity not found", exception.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorMessage);
+    }
 }
